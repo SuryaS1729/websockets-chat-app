@@ -11,21 +11,21 @@ let allSockets: User[] = []
 wss.on("connection",(socket)=>{
 
 
-       socket.on("message",(message)=>{
+    socket.on("message",(message)=>{
         //@ts-ignore
-        const parsedMessage= JSON.parse(message);
-        if(parsedMessage.type=="join"){
-            console.log("user joined room "+parsedMessage.payload.roomId)
-            allSockets.push({
-                socket,
-                room:parsedMessage.payload.roomId
-            })
-        }
+            const parsedMessage= JSON.parse(message);
+            if(parsedMessage.type=="join"){
+                console.log("user joined room "+parsedMessage.payload.roomId)
+                allSockets.push({
+                    socket,
+                    room:parsedMessage.payload.roomId
+                })
+            }
         
         if(parsedMessage.type=="chat"){
             // const currentUserRoom= allSockets.find((x)=>x.socket==socket).room
             console.log('user wants to chat')
-            let currentUserRoom = null
+            let currentUserRoom: string | null = null
             for(let i=0;i<allSockets.length;i++){
                 if(allSockets[i].socket == socket){
                     currentUserRoom = allSockets[i].room
